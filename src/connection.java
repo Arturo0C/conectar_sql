@@ -29,7 +29,7 @@ public class connection {
                 int age = rs.getInt("age");
                 String birth_date = rs.getString("birth_date");
                 String gende = rs.getString("gender");
-                int height = rs.getInt("heigth");
+                int height = rs.getInt("height");
                 double weight = rs.getDouble("weight");
                 String type = rs.getString("type");
                 String active = rs.getString("is_active");
