@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class connector {
     public static void main(String[] args) throws SQLException {
-       Consult();
+        Consult();
     }
 
     // <--------------------------> Consult <-------------------------->
@@ -21,9 +21,10 @@ public class connector {
             System.out.println("3. Sports listing");
             System.out.println("-----------------------");
             String input = sc.next();
+            System.out.println("");
             if (!(isNumeric(input))) {
-                System.out.println("This is not a choice, select a numeric choise: ");
-                input = sc.next();
+                System.out.println("This is not a choice, only numbers");
+                Consult();
             }
             int select = Integer.parseInt(input);
             if (!(select > 3)) {
@@ -40,7 +41,7 @@ public class connector {
                 }
             } else {
                 System.out.println("It only works with numbers from 1 to 3");
-                System.out.println("");
+                Consult();
             }
 
             System.out.println("Do you want to check something else?");
@@ -65,7 +66,6 @@ public class connector {
                 Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
 
                 String query = "SELECT * FROM `participant` WHERE `dni`='" + dni + "'";
-
 
                 Statement st = conexion.createStatement();
 
@@ -108,7 +108,13 @@ public class connector {
                 System.err.println("Error");
             }
         } else {
-            System.out.println("The National Identification Document introduced does not exist");
+            System.out.println("The National Identification Document introduced does not exist, do you want to try another one?");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                participant();
+            }
         }
     }
 
@@ -148,7 +154,13 @@ public class connector {
                 System.err.println("Fail to connect.");
             }
         } else {
-            System.out.println("The ID for the team does not exist");
+            System.out.println("The ID for the team does not exist, do you want to try another one?");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                team();
+            }
         }
     }
 
@@ -226,8 +238,8 @@ public class connector {
             while (rs.next()) {
                 String id_tabla = rs.getString("id_team");
 
-                if (!(id.equals(id_tabla))) {
-                    return false;
+                if (id.equals(id_tabla)) {
+                    return true;
                 }
             }
 
@@ -237,7 +249,7 @@ public class connector {
             System.err.println("Fail");
         }
 
-        return true;
+        return false;
     }
 
     static boolean isNumeric(String str) {
