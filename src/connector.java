@@ -3,6 +3,11 @@ import java.util.Scanner;
 
 public class connector {
     public static void main(String[] args) throws SQLException {
+       Consult();
+    }
+
+    // <--------------------------> Consult <-------------------------->
+    static void Consult() {
         Scanner sc = new Scanner(System.in);
 
 
@@ -27,7 +32,7 @@ public class connector {
                         participant();
                         break;
                     case 2:
-                        teams();
+                        team();
                         break;
                     case 3:
                         list();
@@ -46,7 +51,6 @@ public class connector {
                 i = sc.next();
             }
         }
-
 
     }
 
@@ -108,10 +112,10 @@ public class connector {
         }
     }
 
-    static void teams() {
+    static void team() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Id team: ");
-        int id = sc.nextInt();
+        String id = sc.next();
         System.out.println("-----------------------");
         if (comp_teams(id)) {
             try {
@@ -208,7 +212,7 @@ public class connector {
         return false;
     }
 
-    static boolean comp_teams(int id) {
+    static boolean comp_teams(String id) {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
@@ -220,12 +224,10 @@ public class connector {
 
             // Mostramos lo que queremos de la query hecha.
             while (rs.next()) {
-                int id_tabla = rs.getInt("id_team");
+                String id_tabla = rs.getString("id_team");
 
-                if (id != id_tabla) {
-                    continue;
-                } else {
-                    return true;
+                if (!(id.equals(id_tabla))) {
+                    return false;
                 }
             }
 
@@ -235,12 +237,15 @@ public class connector {
             System.err.println("Fail");
         }
 
-        return false;
+        return true;
     }
 
-    public static boolean isNumeric(String str) {
-        return (str.matches("[+-]?\\d*(\\.\\d+)?") && str.equals("") == false);
+    static boolean isNumeric(String str) {
+        return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
     }
+
+    //<----------------------------------------------------------------->
+
 
 }
 
