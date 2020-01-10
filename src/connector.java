@@ -1,7 +1,11 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.*;
 import java.util.Scanner;
 
 public class connector {
+    private static String str;
+
     public static void main(String[] args) throws SQLException {
         Consult();
     }
@@ -252,7 +256,8 @@ public class connector {
         return false;
     }
 
-    static boolean isNumeric(String str) {
+    private static boolean isNumeric(@NotNull String str) {
+        connector.str = str;
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
     }
 
