@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class connection {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+
         String i = "y";
         while (i.equals("y")) {
             System.out.println("Select an option: ");
@@ -13,6 +15,7 @@ public class connection {
             System.out.println("1. Participants");
             System.out.println("2. Teams");
             System.out.println("3. Sports listing");
+            System.out.println("-----------------------");
             System.out.println("");
             int select = sc.nextInt();
             System.out.println("");
@@ -25,7 +28,7 @@ public class connection {
                     if (comp_dni(dni)) {
                         try {
                             String url = "jdbc:mysql://localhost:3306/sports";
-                            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
                             String query = "SELECT * FROM `participant` WHERE `dni`='" + dni + "'";
 
@@ -83,7 +86,7 @@ public class connection {
 
                     try {
                         String url = "jdbc:mysql://localhost:3306/sports";
-                        Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                        Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
                         String query = "SELECT * FROM `team` WHERE `id_team`='" + id + "'";
 
@@ -114,7 +117,7 @@ public class connection {
                 case 3: //List
                     try {
                         String url = "jdbc:mysql://localhost:3306/sports";
-                        Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                        Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
                         String query = "SELECT * FROM `sport`";
 
@@ -157,10 +160,10 @@ public class connection {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+            Statement st = conexion.createStatement();
 
             String query = "SELECT dni FROM `participant`";
-            Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery(query);
 
             // Mostramos lo que queremos de la query hecha.
