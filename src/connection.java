@@ -25,9 +25,18 @@ public class connection {
                 String name = rs.getString("name");
                 String last_name1 = rs.getString("last_name1");
                 String last_name2 = rs.getString("last_name2");
-
-
+                String nation = rs.getString("nationality");
+                int age = rs.getInt("age");
+                String birth_date = rs.getString("birth_date");
+                String gende = rs.getString("gender");
+                int height = rs.getInt("heigth");
+                double weight = rs.getDouble("weight");
+                String type = rs.getString("type");
+                String active = rs.getString("is_active");
                 int back_number = rs.getInt("back_number");
+
+                System.out.println("Name: "+name+" "+last_name1+" "+last_name2+".");
+
 
 
             }
