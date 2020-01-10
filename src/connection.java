@@ -6,11 +6,12 @@ public class connection {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Que quieres consultar?");
+        System.out.println("Select an option: ");
         System.out.println("-----------------------");
-        System.out.println("1.personas");
-        System.out.println("2.equipos");
-        System.out.println("3.Listado de deportes");
+        System.out.println("1. Participants");
+        System.out.println("2. Teams");
+        System.out.println("3. Sports listing");
+        System.out.println("");
         int select = sc.nextInt();
         System.out.println("");
 
@@ -68,7 +69,7 @@ public class connection {
                     System.err.println("Fail to connect.");
                 }
                 break;
-            case 2: //Participants
+            case 2: //Teams
                 System.out.println("Id team: ");
                 int id = sc.nextInt();
                 System.out.println("-----------------------");
@@ -94,6 +95,34 @@ public class connection {
                         System.out.println("Name: " + name);
                         System.out.println("Country: " + country);
 
+                    }
+                    System.out.println("-----------------------");
+                    st.close();
+                    rs.close();
+
+                } catch (Exception e) {
+                    System.err.println("Fail to connect.");
+                }
+                break;
+            case 3: //List
+                try {
+                    String url = "jdbc:mysql://localhost:3306/sports";
+                    Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+
+                    String query = "SELECT * FROM `sport`";
+
+                    // Creamos java attement
+                    Statement st = conexion.createStatement();
+
+                    //Execute the query and get a java resulset
+                    ResultSet rs = st.executeQuery(query);
+
+                    // Mostramos lo que queremos de la query hecha.
+                    System.out.println("Sports:");
+                    while (rs.next()) {
+
+                        System.out.println("Id: "+rs.getInt("id_sport"));
+                        System.out.println("Name: "+rs.getString("name")+", category name: "+rs.getString("category_name"));
                     }
                     System.out.println("-----------------------");
                     st.close();
