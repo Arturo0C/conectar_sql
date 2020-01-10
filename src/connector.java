@@ -1,35 +1,43 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class connection2 {
+public class connector {
     public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
 
 
         String i = "y";
         while (i.equals("y")) {
-        System.out.println("Select an option: ");
-        System.out.println("-----------------------");
-        System.out.println("1. Participants");
-        System.out.println("2. Teams");
-        System.out.println("3. Sports listing");
-        System.out.println("-----------------------");
-        System.out.println("");
-        int select = sc.nextInt();
-        System.out.println("");
 
-
-            switch (select) {
-                case 1:
-                    participant();
-                    break;
-                case 2:
-                    teams();
-                    break;
-                case 3:
-                    list();
-                    break;
+            System.out.println("Select an option: ");
+            System.out.println("-----------------------");
+            System.out.println("1. Participants");
+            System.out.println("2. Teams");
+            System.out.println("3. Sports listing");
+            System.out.println("-----------------------");
+            String input = sc.next();
+            if (!(isNumeric(input))) {
+                System.out.println("This is not a choice, select a numeric choise: ");
+                input = sc.next();
             }
+            int select = Integer.parseInt(input);
+            if (!(select > 3)) {
+                switch (select) {
+                    case 1:
+                        participant();
+                        break;
+                    case 2:
+                        teams();
+                        break;
+                    case 3:
+                        list();
+                        break;
+                }
+            } else {
+                System.out.println("It only works with numbers from 1 to 3");
+                System.out.println("");
+            }
+
             System.out.println("Do you want to check something else?");
             System.out.println("Yes(y) or not(n)");
             i = sc.next();
@@ -105,35 +113,38 @@ public class connection2 {
         System.out.println("Id team: ");
         int id = sc.nextInt();
         System.out.println("-----------------------");
+        if (comp_teams(id)) {
+            try {
+                String url = "jdbc:mysql://localhost:3306/sports";
+                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
 
-        try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                String query = "SELECT * FROM `team` WHERE `id_team`='" + id + "'";
 
-            String query = "SELECT * FROM `team` WHERE `id_team`='" + id + "'";
+                // Creamos java attement
+                Statement st = conexion.createStatement();
 
-            // Creamos java attement
-            Statement st = conexion.createStatement();
+                //Execute the query and get a java resulset
+                ResultSet rs = st.executeQuery(query);
 
-            //Execute the query and get a java resulset
-            ResultSet rs = st.executeQuery(query);
+                // Mostramos lo que queremos de la query hecha.
+                while (rs.next()) {
 
-            // Mostramos lo que queremos de la query hecha.
-            while (rs.next()) {
+                    String name = rs.getString("name");
+                    String country = rs.getString("country");
 
-                String name = rs.getString("name");
-                String country = rs.getString("country");
+                    System.out.println("Name: " + name);
+                    System.out.println("Country: " + country);
 
-                System.out.println("Name: " + name);
-                System.out.println("Country: " + country);
+                }
+                System.out.println("-----------------------");
+                st.close();
+                rs.close();
 
+            } catch (Exception e) {
+                System.err.println("Fail to connect.");
             }
-            System.out.println("-----------------------");
-            st.close();
-            rs.close();
-
-        } catch (Exception e) {
-            System.err.println("Fail to connect.");
+        } else {
+            System.out.println("The ID for the team does not exist");
         }
     }
 
@@ -196,4 +207,41 @@ public class connection2 {
 
         return false;
     }
+
+    static boolean comp_teams(int id) {
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Statement st = conexion.createStatement();
+
+            String query = "SELECT id_team FROM `team`";
+            ResultSet rs = st.executeQuery(query);
+
+            // Mostramos lo que queremos de la query hecha.
+            while (rs.next()) {
+                int id_tabla = rs.getInt("id_team");
+
+                if (id != id_tabla) {
+                    continue;
+                } else {
+                    return true;
+                }
+            }
+
+            st.close();
+            rs.close();
+        } catch (Exception e) {
+            System.err.println("Fail");
+        }
+
+        return false;
+    }
+
+    public static boolean isNumeric(String str) {
+        return (str.matches("[+-]?\\d*(\\.\\d+)?") && str.equals("") == false);
+    }
+
 }
+
+
