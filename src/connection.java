@@ -7,7 +7,7 @@ public class connection {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-
+        // Crea redundancia
         String i = "y";
         while (i.equals("y")) {
             System.out.println("Select an option: ");
@@ -28,7 +28,7 @@ public class connection {
                     if (comp_dni(dni)) {
                         try {
                             String url = "jdbc:mysql://localhost:3306/sports";
-                            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+                            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
 
                             String query = "SELECT * FROM `participant` WHERE `dni`='" + dni + "'";
 
@@ -86,7 +86,7 @@ public class connection {
 
                     try {
                         String url = "jdbc:mysql://localhost:3306/sports";
-                        Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+                        Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
 
                         String query = "SELECT * FROM `team` WHERE `id_team`='" + id + "'";
 
@@ -117,7 +117,7 @@ public class connection {
                 case 3: //List
                     try {
                         String url = "jdbc:mysql://localhost:3306/sports";
-                        Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+                        Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
 
                         String query = "SELECT * FROM `sport`";
 
@@ -160,7 +160,7 @@ public class connection {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
             Statement st = conexion.createStatement();
 
             String query = "SELECT dni FROM `participant`";
