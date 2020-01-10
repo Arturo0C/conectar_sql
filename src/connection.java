@@ -21,6 +21,7 @@ public class connection {
 
             }
             st.close();
+            rs.close();
 
         } catch(Exception e) {
             System.err.println(e.getMessage());
