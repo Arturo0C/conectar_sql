@@ -1,13 +1,17 @@
 import java.sql.*;
+import java.util.Scanner;
 
 public class connection {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Numero de DNI: ");
+        String dni = sc.next();
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion =  DriverManager.getConnection(url,"admin","Nochelarga123-");
+            Connection conexion =  DriverManager.getConnection(url,"root","tuenti1997");
 
-            String query = "SELECT * FROM participant";
+            String query = "SELECT * FROM `participant` WHERE `dni`='"+dni+"'";
 
             // Creamos java attement
             Statement st = conexion.createStatement();
@@ -17,7 +21,7 @@ public class connection {
 
             while (rs.next()) {
                 // Mostramos lo que queremos de la query hecha.
-                System.out.println(rs.getString("name") + " " + rs.getString("dni"));
+                System.out.println("Nombre del jugador: "+rs.getString("name") + " " + rs.getString("last_name1")+ " " + rs.getString("last_name2") + ". Dorsal: " + rs.getInt("back_number"));
 
             }
             st.close();
