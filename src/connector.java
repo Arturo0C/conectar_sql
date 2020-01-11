@@ -7,11 +7,11 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-        Consult();
+        insert();
     }
 
     // <--------------------------> Consult <-------------------------->
-    static void Consult() {
+    static void consult() {
             Scanner sc = new Scanner(System.in);
 
             System.out.println("Select an option: ");
@@ -25,7 +25,7 @@ public class connector {
             if (!(isNumeric(input))) {
                 System.out.println("This is not a choice, only numbers");
                 input = "4";
-                Consult();
+                consult();
             }
             int select = Integer.parseInt(input);
             if (!(select > 4)) {
@@ -44,14 +44,14 @@ public class connector {
                 }
             } else {
                 System.out.println("It only works with numbers from 1 to 3");
-                Consult();
+                consult();
             }
 
             System.out.println("Do you want to check something else?");
             System.out.println("Yes(y) or not(n)");
             if (sc.next().equals("y")) {
 
-                Consult();
+                consult();
             }
     }
 
@@ -251,13 +251,63 @@ public class connector {
 
         return false;
     }
+    
 
+    // <--------------------------> Insert <-------------------------->
+
+    static void insert() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select an option: ");
+        System.out.println("-----------------------");
+        System.out.println("1. Persona");
+        System.out.println("2. Equip");
+        System.out.println("3. Sports");
+        System.out.println("-----------------------");
+        String input = sc.next();
+        System.out.println("");
+        if (!(isNumeric(input))) {
+            System.out.println("This is not a choice, only numbers");
+            input = "4";
+            insert();
+        }
+        int select = Integer.parseInt(input);
+        if (!(select > 4)) {
+            switch (select) {
+                case 1:
+                    System.out.println("hello");
+                    break;
+                case 2:
+                    System.out.println("hello");
+                    break;
+                case 3:
+                    System.out.println("hello");
+                    break;
+                case 4:
+                    return;
+            }
+        } else {
+            System.out.println("It only works with numbers from 1 to 3");
+            insert();
+        }
+
+        System.out.println("Do you want to check something else?");
+        System.out.println("Yes(y) or not(n)");
+        if (sc.next().equals("y")) {
+            insert();
+        }
+
+
+    }
+    
+    // <--------------------------> Modify <-------------------------->
+    // <--------------------------> Delete <-------------------------->
+    // <--------------------------> General <------------------------->
     private static boolean isNumeric(@NotNull String str) {
         connector.str = str;
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
     }
 
-    //<----------------------------------------------------------------->
 
 
 }
