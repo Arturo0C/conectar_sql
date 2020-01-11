@@ -337,8 +337,10 @@ public class connector {
                 System.out.println("Back numner: ");
                 String back_number = sc.next();
 
-                st.executeUpdate("Insert into team (name,country) values ('"+name+"','"+nationality+"')");
-//                st.executeUpdate("INSERT INTO participant (back_number,name,last_name1,last_name2,age,gender,dni,nationality,height,weight,type,is_active, birth_date) VALUES ("+back_number+",'"+name+"'"+",'"+last_name1+"'"+",'"+last_name2+"'"+","+age+","+",'"+gender+"'"+",'"+dni+"'"+",'"+nationality+"'"+","+height+","+weight+",'"+type+"'"+",'"+active+"'"+",'"+birth_date+"')");
+//                st.executeUpdate("Insert into team (name,country) values ('"+name+"','"+nationality+"')");
+
+                st.executeUpdate("INSERT INTO participant (back_number,name,last_name1,last_name2,age,gender,dni,nationality,height,weight,type,is_active, birth_date) VALUES ("+back_number+",'"+name+"','"+last_name1+"','"+last_name2+"',"+age+",'"+gender+"','"+dni+"','"+nationality+"',"+height+","+weight+",'"+type+"','"+active+"','"+birth_date+"')");
+
                 conexion.commit();
                 conexion.close();
 
