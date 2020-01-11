@@ -12,50 +12,50 @@ public class connector {
 
     // <--------------------------> Consult <-------------------------->
     static void consult() {
-            Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-            System.out.println("Select an option: ");
-            System.out.println("-----------------------");
-            System.out.println("1. Participants");
-            System.out.println("2. Teams");
-            System.out.println("3. Sports listing");
-            System.out.println("-----------------------");
-            String input = sc.next();
-            System.out.println("");
-            if (!(isNumeric(input))) {
-                System.out.println("This is not a choice, only numbers");
-                input = "4";
-                consult();
+        System.out.println("Select an option: ");
+        System.out.println("-----------------------");
+        System.out.println("1. Participants");
+        System.out.println("2. Teams");
+        System.out.println("3. Sports listing");
+        System.out.println("-----------------------");
+        String input = sc.next();
+        System.out.println("");
+        if (!(isNumeric(input))) {
+            System.out.println("This is not a choice, only numbers");
+            input = "4";
+            consult();
+        }
+        int select = Integer.parseInt(input);
+        if (!(select > 4)) {
+            switch (select) {
+                case 1:
+                    partConn();
+                    break;
+                case 2:
+                    team();
+                    break;
+                case 3:
+                    list();
+                    break;
+                case 4:
+                    return;
             }
-            int select = Integer.parseInt(input);
-            if (!(select > 4)) {
-                switch (select) {
-                    case 1:
-                        participant();
-                        break;
-                    case 2:
-                        team();
-                        break;
-                    case 3:
-                        list();
-                        break;
-                    case 4:
-                        return;
-                }
-            } else {
-                System.out.println("It only works with numbers from 1 to 3");
-                consult();
-            }
+        } else {
+            System.out.println("It only works with numbers from 1 to 3");
+            consult();
+        }
 
-            System.out.println("Do you want to check something else?");
-            System.out.println("Yes(y) or not(n)");
-            if (sc.next().equals("y")) {
+        System.out.println("Do you want to check something else?");
+        System.out.println("Yes(y) or not(n)");
+        if (sc.next().equals("y")) {
 
-                consult();
-            }
+            consult();
+        }
     }
 
-    static void participant() {
+    static void partConn() {
         Scanner sc = new Scanner(System.in);
         System.out.println("National Document Number: ");
         String dni = sc.next();
@@ -113,7 +113,7 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
-                participant();
+                partConn();
             }
         }
     }
@@ -251,7 +251,7 @@ public class connector {
 
         return false;
     }
-    
+
 
     // <--------------------------> Insert <-------------------------->
 
@@ -260,9 +260,9 @@ public class connector {
 
         System.out.println("Select an option: ");
         System.out.println("-----------------------");
-        System.out.println("1. Persona");
-        System.out.println("2. Equip");
-        System.out.println("3. Sports");
+        System.out.println("1. Participant");
+        System.out.println("2. Team");
+        System.out.println("3. Sport");
         System.out.println("-----------------------");
         String input = sc.next();
         System.out.println("");
@@ -299,7 +299,52 @@ public class connector {
 
 
     }
-    
+
+    static void partInsert() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("National Document Number: ");
+        String dni = sc.next();
+        System.out.println("-----------------------");
+        if (comp_dni(dni)) {
+            try {
+                String url = "jdbc:mysql://localhost:3306/sports";
+                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                Statement st = conexion.createStatement();
+
+
+                System.out.println("Name: ");
+                String name = sc.next("name");
+                System.out.println("Nationality: ");
+                String nationality = sc.next();
+                System.out.println("Age: ");
+                System.out.println("Birth date: ");
+                System.out.println("Gender: ");
+                System.out.println("Height: ");
+                System.out.println("Weight: ");
+                System.out.println("Active: ");
+                System.out.println("Type: ");
+                System.out.println("Back numner: ");
+
+
+
+
+            } catch (Exception e) {
+                System.err.println("Error");
+            }
+                 } else {
+                    System.out.println("The National Identification Document introduced does not exist, do you want to try another one?");
+                    System.out.println("Yes(y) or not(n)");
+                    String i = sc.next();
+                    System.out.println("");
+                    if (i.equals("y")) {
+                        partInsert();
+                    }
+                 }
+
+
+    }
+
     // <--------------------------> Modify <-------------------------->
     // <--------------------------> Delete <-------------------------->
     // <--------------------------> General <------------------------->
@@ -307,7 +352,6 @@ public class connector {
         connector.str = str;
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
     }
-
 
 
 }
