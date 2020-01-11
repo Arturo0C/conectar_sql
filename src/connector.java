@@ -12,11 +12,7 @@ public class connector {
 
     // <--------------------------> Consult <-------------------------->
     static void Consult() {
-        Scanner sc = new Scanner(System.in);
-
-
-        String i = "y";
-        while (i.equals("y")) {
+            Scanner sc = new Scanner(System.in);
 
             System.out.println("Select an option: ");
             System.out.println("-----------------------");
@@ -28,10 +24,11 @@ public class connector {
             System.out.println("");
             if (!(isNumeric(input))) {
                 System.out.println("This is not a choice, only numbers");
+                input = "4";
                 Consult();
             }
             int select = Integer.parseInt(input);
-            if (!(select > 3)) {
+            if (!(select > 4)) {
                 switch (select) {
                     case 1:
                         participant();
@@ -42,6 +39,8 @@ public class connector {
                     case 3:
                         list();
                         break;
+                    case 4:
+                        return;
                 }
             } else {
                 System.out.println("It only works with numbers from 1 to 3");
@@ -50,13 +49,10 @@ public class connector {
 
             System.out.println("Do you want to check something else?");
             System.out.println("Yes(y) or not(n)");
-            i = sc.next();
-            while (i == "y" || i == "n") {
-                System.out.println("Yes(y) or not(n)");
-                i = sc.next();
-            }
-        }
+            if (sc.next().equals("y")) {
 
+                Consult();
+            }
     }
 
     static void participant() {
@@ -259,6 +255,11 @@ public class connector {
     private static boolean isNumeric(@NotNull String str) {
         connector.str = str;
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
+    }
+
+    protected void finalize() throws Throwable{
+        System.out.println("Finalizando el Objeto");
+        super.finalize();
     }
 
     //<----------------------------------------------------------------->
