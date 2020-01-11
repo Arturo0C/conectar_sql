@@ -257,11 +257,6 @@ public class connector {
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
     }
 
-    protected void finalize() throws Throwable{
-        System.out.println("Finalizando el Objeto");
-        super.finalize();
-    }
-
     //<----------------------------------------------------------------->
 
 
