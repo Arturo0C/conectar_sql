@@ -100,6 +100,7 @@ public class connector {
         System.out.println("Do you want to check something else?");
         System.out.println("Yes(y) or not(n)");
         if (sc.next().equals("y")) {
+            System.out.println("");
             menu();
         }
     }
@@ -162,7 +163,9 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
+                System.out.println("");
                 partCon();
+
             }
         }
     }
@@ -208,6 +211,7 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
+                System.out.println("");
                 teamCon();
             }
         }
@@ -267,7 +271,7 @@ public class connector {
             st.close();
             rs.close();
         } catch (Exception e) {
-            System.err.println("Fail");
+            System.err.println("Error on verification of dni");
         }
 
         return false;
@@ -295,7 +299,7 @@ public class connector {
             st.close();
             rs.close();
         } catch (Exception e) {
-            System.err.println("Fail");
+            System.err.println("Error on verification id team");
         }
 
         return false;
@@ -342,6 +346,7 @@ public class connector {
         System.out.println("Do you want to check something else?");
         System.out.println("Yes(y) or not(n)");
         if (sc.next().equals("y")) {
+            System.out.println("");
             menu();
         }
 
@@ -349,8 +354,8 @@ public class connector {
     }
 
     static void partInsert() {
-
         Scanner sc = new Scanner(System.in);
+
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
@@ -399,6 +404,7 @@ public class connector {
                 String i = sc.next();
                 System.out.println("");
                 if (i.equals("y")) {
+                    System.out.println("");
                     partCon();
                 }
             }
@@ -435,6 +441,7 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
+                System.out.println("");
                 partCon();
             }
         }
@@ -471,6 +478,7 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
+                System.out.println("");
                 partCon();
             }
         }
