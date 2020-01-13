@@ -7,7 +7,7 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-       menu();
+        menu();
     }
 
     // <--------------------------> Menu <----------------------------->
@@ -47,7 +47,7 @@ public class connector {
                     return;
             }
         } else {
-            System.out.println("It only works with numbers from 1 to 3");
+            System.out.println("It only works with numbers from 1 to 4");
             menu();
         }
     }
@@ -148,7 +148,7 @@ public class connector {
 
 
                 }
-                System.out.print("ID team: ");
+                System.out.print("Team: ");
                 teamId(dni);
                 System.out.println("-----------------------");
                 st.close();
@@ -170,8 +170,6 @@ public class connector {
         }
 
     }
-
-
 
     static void teamConId(){
         Scanner sc = new Scanner(System.in);
@@ -687,20 +685,27 @@ public class connector {
             Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
             String query = "SELECT id_team FROM `participant_have_team` WHERE `dni`='" + dni + "'";
-
             Statement st = conexion.createStatement();
-
             ResultSet rs = st.executeQuery(query);
-
+            String id = null;
 
             while (rs.next()) {
-                System.out.println(rs.getString("id_team"));
+                id = rs.getString("id_team");
             }
+
+            ResultSet rs2 = st.executeQuery("SELECT name FROM `team` WHERE `id_team`=" + id);
+            while (rs2.next()){
+                System.out.println(rs2.getString("name"));
+            }
+
 
         } catch (Exception e) {
             System.err.println("Error");
         }
+
     }
+
+
 
 
 
