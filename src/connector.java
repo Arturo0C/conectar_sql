@@ -307,7 +307,7 @@ public class connector {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
-                conexion.setAutoCommit(false);
+
 
                 Statement st = conexion.createStatement();
 
@@ -340,10 +340,13 @@ public class connector {
                 String type = sc.next();
                 System.out.println("Back numner: ");
                 String back_number = sc.next();
-
+                System.out.println("Team id: ");
+                String id_team = sc.next();
+                System.out.println("");
+                System.out.println("Insert into participant_have_team (dni, id_team) values ('"+dni+"',"+id_team+")");
                 st.executeUpdate("INSERT INTO participant (back_number,name,last_name1,last_name2,age,gender,dni,nationality,height,weight,type,is_active, birth_date) VALUES ("+back_number+",'"+name+"','"+last_name1+"','"+last_name2+"',"+age+",'"+gender+"','"+dni+"','"+nationality+"',"+height+","+weight+",'"+type+"','"+active+"','"+birth_date+"')");
+                st.executeQuery("Insert into participant_have_team (dni, id_team) values ('"+dni+"',"+id_team+")");
 
-                conexion.commit();
                 conexion.close();
 
             } catch (Exception e) {
@@ -583,9 +586,6 @@ public class connector {
         }
 
     }
-
-
-
 
 
     // <--------------------------> Delete <-------------------------->
