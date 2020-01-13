@@ -9,7 +9,7 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-        menu();
+    partModify();
     }
 
     // <--------------------------> Menu <----------------------------->
@@ -29,7 +29,7 @@ public class connector {
         if (!(isNumeric(input))) {
             System.out.println("This is not a choice, only numbers");
             input = "5";
-            consult();
+            menu();
         }
         int select = Integer.parseInt(input);
         if (!(select > 5)) {
@@ -41,7 +41,7 @@ public class connector {
                     insert();
                     break;
                 case 3:
-                    System.out.println("hello!");;
+                    System.out.println("hello!");
                     break;
                 case 4:
                     System.out.println("hello!");
@@ -50,12 +50,6 @@ public class connector {
             }
         } else {
             System.out.println("It only works with numbers from 1 to 3");
-            consult();
-        }
-
-        System.out.println("Do you want to check something else?");
-        System.out.println("Yes(y) or not(n)");
-        if (sc.next().equals("y")) {
             menu();
         }
     }
@@ -66,9 +60,9 @@ public class connector {
 
         System.out.println("Select an option: ");
         System.out.println("-----------------------");
-        System.out.println("1. Participants");
-        System.out.println("2. Teams");
-        System.out.println("3. Sports listing");
+        System.out.println("1. Participant");
+        System.out.println("2. Team");
+        System.out.println("3. Sport listing");
         System.out.println("-----------------------");
         String input = sc.next();
         System.out.println("");
@@ -81,7 +75,7 @@ public class connector {
         if (!(select > 4)) {
             switch (select) {
                 case 1:
-                    partCon();
+                    partConDni();
                     break;
                 case 2:
                     teamCon();
@@ -105,11 +99,16 @@ public class connector {
         }
     }
 
-    static void partCon() {
+    static void partConDni() {
         Scanner sc = new Scanner(System.in);
         System.out.println("National Document Number: ");
         String dni = sc.next();
         System.out.println("-----------------------");
+        partCon(dni);
+    }
+
+    static void partCon(String dni) {
+        Scanner sc = new Scanner(System.in);
         if (compDni(dni)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
@@ -164,7 +163,7 @@ public class connector {
             System.out.println("");
             if (i.equals("y")) {
                 System.out.println("");
-                partCon();
+                partConDni();
 
             }
         }
@@ -245,64 +244,6 @@ public class connector {
         } catch (Exception e) {
             System.err.println("Fail to charge the team.");
         }
-    }
-
-    static boolean compDni(String dni) {
-
-        try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
-            Statement st = conexion.createStatement();
-
-            String query = "SELECT dni FROM `participant`";
-            ResultSet rs = st.executeQuery(query);
-
-            // Mostramos lo que queremos de la query hecha.
-            while (rs.next()) {
-                String dni_tabla = rs.getString("dni");
-
-                if (!dni.equals(dni_tabla)) {
-                    continue;
-                } else {
-                    return true;
-                }
-            }
-
-            st.close();
-            rs.close();
-        } catch (Exception e) {
-            System.err.println("Error on verification of dni");
-        }
-
-        return false;
-    }
-
-    static boolean compTeams(String id) {
-
-        try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
-            Statement st = conexion.createStatement();
-
-            String query = "SELECT id_team FROM `team`";
-            ResultSet rs = st.executeQuery(query);
-
-            // Mostramos lo que queremos de la query hecha.
-            while (rs.next()) {
-                String id_tabla = rs.getString("id_team");
-
-                if (id.equals(id_tabla)) {
-                    return true;
-                }
-            }
-
-            st.close();
-            rs.close();
-        } catch (Exception e) {
-            System.err.println("Error on verification id team");
-        }
-
-        return false;
     }
 
     // <--------------------------> Insert <-------------------------->
@@ -405,7 +346,7 @@ public class connector {
                 System.out.println("");
                 if (i.equals("y")) {
                     System.out.println("");
-                    partCon();
+                    partInsert();
                 }
             }
 
@@ -442,7 +383,7 @@ public class connector {
             System.out.println("");
             if (i.equals("y")) {
                 System.out.println("");
-                partCon();
+                teamInsert();
             }
         }
 
@@ -479,7 +420,7 @@ public class connector {
             System.out.println("");
             if (i.equals("y")) {
                 System.out.println("");
-                partCon();
+                sportInsert();
             }
         }
 
@@ -487,11 +428,191 @@ public class connector {
     }
 
     // <--------------------------> Modify <-------------------------->
+
+    static void modify() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select an option: ");
+        System.out.println("-----------------------");
+        System.out.println("1. Participant");
+        System.out.println("2. Team");
+        System.out.println("3. Sport");
+        System.out.println("-----------------------");
+        String input = sc.next();
+        System.out.println("");
+        if (!(isNumeric(input))) {
+            System.out.println("This is not a choice, only numbers");
+            input = "4";
+            consult();
+        }
+        int select = Integer.parseInt(input);
+        if (!(select > 4)) {
+            switch (select) {
+                case 1:
+                    System.out.println("hello!");
+                    break;
+                case 2:
+                    System.out.println("hello!");
+                    break;
+                case 3:
+                    System.out.println("hello!");
+                    break;
+                case 4:
+                    return;
+            }
+        } else {
+            System.out.println("It only works with numbers from 1 to 3");
+            consult();
+        }
+
+        System.out.println("Do you want to check something else?");
+        System.out.println("Yes(y) or not(n)");
+        if (sc.next().equals("y")) {
+            System.out.println("");
+            menu();
+        }
+    }
+
+    static void partModify() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("National Document Number: ");
+        String dni = sc.next();
+        System.out.println("-----------------------");
+        System.out.println("");
+        partCon(dni);
+
+        System.out.println("What data do you want to change?");
+        String dato = sc.next();
+        dato = dato.toLowerCase();
+        if (compColumn(dato)) {
+            try {
+                String url = "jdbc:mysql://localhost:3306/sports";
+                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                conexion.setAutoCommit(false);
+                Statement st = conexion.createStatement();
+
+                System.out.println("");
+                System.out.println("New data: ");
+                String nuevoDato = sc.next();
+                System.out.println("update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'");
+
+                st.executeUpdate("update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'");
+
+
+            } catch (Exception e) {
+                System.out.println("The data entered is not correct, do you want to try another one?");
+                System.out.println("Yes(y) or not(n)");
+                String i = sc.next();
+                System.out.println("");
+                if (i.equals("y")) {
+                    System.out.println("");
+                    partModify();
+                }
+            }
+        } else {
+            System.out.println("The column does not exist");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                System.out.println("");
+                partModify();
+            }
+        }
+
+    }
+
+
+
+
+
     // <--------------------------> Delete <-------------------------->
     // <--------------------------> General <------------------------->
     private static boolean isNumeric(@NotNull String str) {
         connector.str = str;
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
+    }
+
+    static boolean compDni(String dni) {
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Statement st = conexion.createStatement();
+
+            String query = "SELECT dni FROM `participant`";
+            ResultSet rs = st.executeQuery(query);
+
+            // Mostramos lo que queremos de la query hecha.
+            while (rs.next()) {
+                String dni_tabla = rs.getString("dni");
+
+                if (!dni.equals(dni_tabla)) {
+                    continue;
+                } else {
+                    return true;
+                }
+            }
+
+            st.close();
+            rs.close();
+        } catch (Exception e) {
+            System.err.println("Error on verification of dni");
+        }
+
+        return false;
+    }
+
+    static boolean compTeams(String id) {
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Statement st = conexion.createStatement();
+
+            String query = "SELECT id_team FROM `team`";
+            ResultSet rs = st.executeQuery(query);
+
+            // Mostramos lo que queremos de la query hecha.
+            while (rs.next()) {
+                String id_tabla = rs.getString("id_team");
+
+                if (id.equals(id_tabla)) {
+                    return true;
+                }
+            }
+
+            st.close();
+            rs.close();
+        } catch (Exception e) {
+            System.err.println("Error on verification id team");
+        }
+
+        return false;
+    }
+
+    static boolean compColumn(String date) {
+
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Statement st = conexion.createStatement();
+
+            ResultSet rs = st.executeQuery("SELECT * FROM `participant`");
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            for (int i = 1; i <= 13; i++) {
+                if ((date.equals(rsmd.getColumnName(i)))) {
+                    return true;
+                }
+            }
+
+            st.close();
+            rs.close();
+        } catch (Exception e) {
+            System.err.println("Error, this column does exist");
+        }
+        return false;
     }
 
 
