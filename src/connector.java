@@ -9,7 +9,7 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-    partModify();
+    menu();
     }
 
     // <--------------------------> Menu <----------------------------->
@@ -497,7 +497,7 @@ public class connector {
                 System.out.println("update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'");
 
                 st.executeUpdate("update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'");
-
+                st.close();
 
             } catch (Exception e) {
                 System.out.println("The data entered is not correct, do you want to try another one?");
@@ -527,6 +527,8 @@ public class connector {
 
 
     // <--------------------------> Delete <-------------------------->
+
+
     // <--------------------------> General <------------------------->
     private static boolean isNumeric(@NotNull String str) {
         connector.str = str;
