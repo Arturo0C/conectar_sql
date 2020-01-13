@@ -76,7 +76,7 @@ public class connector {
                     partConDni();
                     break;
                 case 2:
-                    teamCon();
+                    teamConId();
                     break;
                 case 3:
                     listCon();
@@ -167,11 +167,16 @@ public class connector {
         }
     }
 
-    static void teamCon() {
+    static void teamConId(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Id team: ");
         String id = sc.next();
         System.out.println("-----------------------");
+        teamCon(id);
+    }
+
+    static void teamCon(String id) {
+        Scanner sc = new Scanner(System.in);
         if (compTeams(id)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
@@ -209,7 +214,7 @@ public class connector {
             System.out.println("");
             if (i.equals("y")) {
                 System.out.println("");
-                teamCon();
+                teamConId();
             }
         }
     }
@@ -450,7 +455,7 @@ public class connector {
                     partModify();
                     break;
                 case 2:
-                    System.out.println("hello!");
+                    teamModify();
                     break;
                 case 3:
                     System.out.println("hello!");
@@ -487,8 +492,9 @@ public class connector {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
                 System.out.println("");
-                System.out.println("New data: ");
+                System.out.println("New "+dato+": ");
                 String nuevoDato = sc.next();
+                System.out.println("");
 
                 String sql = "update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'";
                 Statement st = conexion.createStatement();
@@ -498,6 +504,7 @@ public class connector {
                 st.close();
 
             } catch (Exception e) {
+                System.out.println("");
                 System.out.println("The data entered is not correct, do you want to try another one?");
                 System.out.println("Yes(y) or not(n)");
                 String i = sc.next();
@@ -509,12 +516,65 @@ public class connector {
             }
         } else {
             System.out.println("The column does not exist");
+            System.out.println("Do you want to try again?2");
             System.out.println("Yes(y) or not(n)");
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
                 System.out.println("");
                 partModify();
+            }
+        }
+
+    }
+
+    static void teamModify() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Id of the team: ");
+        String id = sc.next();
+        System.out.println("-----------------------");
+        System.out.println("");
+        teamCon(id);
+
+        System.out.println("What data do you want to change?");
+        String dato = sc.next();
+        dato = dato.toLowerCase();
+        if (compColumn(dato)) {
+            try {
+                String url = "jdbc:mysql://localhost:3306/sports";
+                Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+                System.out.println("");
+                System.out.println("New "+dato+": ");
+                String nuevoDato = sc.next();
+                System.out.println("");
+
+                String sql = "update team set "+dato+"='"+nuevoDato+"' where id_team="+id+"";
+                Statement st = conexion.createStatement();
+
+                st.executeUpdate(sql);
+                conexion.setAutoCommit(true);
+                st.close();
+
+            } catch (Exception e) {
+                System.out.println("");
+                System.out.println("The data entered is not correct, do you want to try another one?");
+                System.out.println("Yes(y) or not(n)");
+                String i = sc.next();
+                System.out.println("");
+                if (i.equals("y")) {
+                    System.out.println("");
+                    teamModify();
+                }
+            }
+        } else {
+            System.out.println("The column does not exist");
+            System.out.println("Do you want to try again?");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                System.out.println("");
+                teamModify();
             }
         }
 
