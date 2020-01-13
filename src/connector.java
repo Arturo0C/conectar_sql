@@ -7,7 +7,7 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-        partInsert();
+        insert();
     }
 
     // <--------------------------> Consult <-------------------------->
@@ -31,13 +31,13 @@ public class connector {
         if (!(select > 4)) {
             switch (select) {
                 case 1:
-                    partConn();
+                    partCon();
                     break;
                 case 2:
-                    team();
+                    teamCon();
                     break;
                 case 3:
-                    list();
+                    listCon();
                     break;
                 case 4:
                     return;
@@ -55,12 +55,12 @@ public class connector {
         }
     }
 
-    static void partConn() {
+    static void partCon() {
         Scanner sc = new Scanner(System.in);
         System.out.println("National Document Number: ");
         String dni = sc.next();
         System.out.println("-----------------------");
-        if (comp_dni(dni)) {
+        if (compDni(dni)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
@@ -113,17 +113,17 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
-                partConn();
+                partCon();
             }
         }
     }
 
-    static void team() {
+    static void teamCon() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Id team: ");
         String id = sc.next();
         System.out.println("-----------------------");
-        if (comp_teams(id)) {
+        if (compTeams(id)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
@@ -159,12 +159,12 @@ public class connector {
             String i = sc.next();
             System.out.println("");
             if (i.equals("y")) {
-                team();
+                teamCon();
             }
         }
     }
 
-    static void list() {
+    static void listCon() {
         Scanner sc = new Scanner(System.in);
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
@@ -190,11 +190,11 @@ public class connector {
             rs.close();
 
         } catch (Exception e) {
-            System.err.println("Fail to connect.");
+            System.err.println("Fail to charge the team.");
         }
     }
 
-    static boolean comp_dni(String dni) {
+    static boolean compDni(String dni) {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
@@ -224,7 +224,7 @@ public class connector {
         return false;
     }
 
-    static boolean comp_teams(String id) {
+    static boolean compTeams(String id) {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
@@ -275,7 +275,7 @@ public class connector {
         if (!(select > 4)) {
             switch (select) {
                 case 1:
-                    System.out.println("hello");
+                    partInsert();
                     break;
                 case 2:
                     System.out.println("hello");
@@ -310,44 +310,108 @@ public class connector {
 
                 Statement st = conexion.createStatement();
 
-                System.out.println("DNI: ");
+                System.out.println("Enter the participant's information: ");
+                System.out.println("");
+
+                System.out.println("DNI(required): ");
                 String dni = sc.next();
-                System.out.println("Name: ");
+                System.out.println("Name(required): ");
                 String name = sc.next();
-                System.out.println("First last name: ");
+                System.out.println("First last name(required): ");
                 String last_name1 = sc.next();
                 System.out.println("Second last name: ");
                 String last_name2 = sc.next();
-                System.out.println("Nationality: ");
+                System.out.println("Nationality(required): ");
                 String nationality = sc.next();
-                System.out.println("Age: ");
+                System.out.println("Age(required): ");
                 String age = sc.next();
-                System.out.println("Birth date: ");
+                System.out.println("Birth date(required): ");
                 String birth_date = sc.next();
-                System.out.println("Gender: ");
+                System.out.println("Gender(required: Male or Female): ");
                 String gender = sc.next();
                 System.out.println("Height: ");
                 String height = sc.next();
                 System.out.println("Weight: ");
                 String weight = sc.next();
-                System.out.println("Active: ");
+                System.out.println("Active(required: Yer or No): ");
                 String active = sc.next();
-                System.out.println("Type: ");
+                System.out.println("Type(required: Coach,Player or Referee: ):  ");
                 String type = sc.next();
                 System.out.println("Back numner: ");
                 String back_number = sc.next();
-
-//                st.executeUpdate("Insert into team (name,country) values ('"+name+"','"+nationality+"')");
 
                 st.executeUpdate("INSERT INTO participant (back_number,name,last_name1,last_name2,age,gender,dni,nationality,height,weight,type,is_active, birth_date) VALUES ("+back_number+",'"+name+"','"+last_name1+"','"+last_name2+"',"+age+",'"+gender+"','"+dni+"','"+nationality+"',"+height+","+weight+",'"+type+"','"+active+"','"+birth_date+"')");
 
                 conexion.commit();
                 conexion.close();
 
-
             } catch (Exception e) {
-                System.err.println("Error");
+                System.out.println("The data entered is not correct, do you want to try another one?");
+                System.out.println("Yes(y) or not(n)");
+                String i = sc.next();
+                System.out.println("");
+                if (i.equals("y")) {
+                    partCon();
+                }
             }
+
+
+    }
+
+    static void teamInsert() {
+
+        Scanner sc = new Scanner(System.in);
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            conexion.setAutoCommit(false);
+
+            Statement st = conexion.createStatement();
+
+            System.out.println("Enter the Team information: ");
+            System.out.println("");
+
+            System.out.println("DNI(required): ");
+            String dni = sc.next();
+            System.out.println("Name(required): ");
+            String name = sc.next();
+            System.out.println("First last name(required): ");
+            String last_name1 = sc.next();
+            System.out.println("Second last name: ");
+            String last_name2 = sc.next();
+            System.out.println("Nationality(required): ");
+            String nationality = sc.next();
+            System.out.println("Age(required): ");
+            String age = sc.next();
+            System.out.println("Birth date(required): ");
+            String birth_date = sc.next();
+            System.out.println("Gender(required: Male or Female): ");
+            String gender = sc.next();
+            System.out.println("Height: ");
+            String height = sc.next();
+            System.out.println("Weight: ");
+            String weight = sc.next();
+            System.out.println("Active(required: Yer or No): ");
+            String active = sc.next();
+            System.out.println("Type(required: Coach,Player or Referee: ):  ");
+            String type = sc.next();
+            System.out.println("Back numner: ");
+            String back_number = sc.next();
+
+            st.executeUpdate("INSERT INTO participant (back_number,name,last_name1,last_name2,age,gender,dni,nationality,height,weight,type,is_active, birth_date) VALUES ("+back_number+",'"+name+"','"+last_name1+"','"+last_name2+"',"+age+",'"+gender+"','"+dni+"','"+nationality+"',"+height+","+weight+",'"+type+"','"+active+"','"+birth_date+"')");
+
+            conexion.commit();
+            conexion.close();
+
+        } catch (Exception e) {
+            System.out.println("The data entered is not correct, do you want to try another one?");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                partCon();
+            }
+        }
 
 
     }
