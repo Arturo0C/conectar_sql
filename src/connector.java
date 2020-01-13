@@ -41,7 +41,7 @@ public class connector {
                     insert();
                     break;
                 case 3:
-                    System.out.println("hello!");
+                    modify();
                     break;
                 case 4:
                     System.out.println("hello!");
@@ -449,7 +449,7 @@ public class connector {
         if (!(select > 4)) {
             switch (select) {
                 case 1:
-                    System.out.println("hello!");
+                    partModify();
                     break;
                 case 2:
                     System.out.println("hello!");
