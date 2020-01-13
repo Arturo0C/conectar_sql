@@ -1,5 +1,7 @@
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -7,7 +9,55 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-        insert();
+        menu();
+    }
+
+    // <--------------------------> Menu <----------------------------->
+
+    static void menu() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Select an option: ");
+        System.out.println("-----------------------");
+        System.out.println("1. Consult");
+        System.out.println("2. Insert");
+        System.out.println("3. Modify");
+        System.out.println("4. Delete");
+        System.out.println("-----------------------");
+        String input = sc.next();
+        System.out.println("");
+        if (!(isNumeric(input))) {
+            System.out.println("This is not a choice, only numbers");
+            input = "5";
+            consult();
+        }
+        int select = Integer.parseInt(input);
+        if (!(select > 5)) {
+            switch (select) {
+                case 1:
+                    consult();
+                    break;
+                case 2:
+                    insert();
+                    break;
+                case 3:
+                    System.out.println("hello!");;
+                    break;
+                case 4:
+                    System.out.println("hello!");
+                case 5:
+                    return;
+            }
+        } else {
+            System.out.println("It only works with numbers from 1 to 3");
+            consult();
+        }
+
+        System.out.println("Do you want to check something else?");
+        System.out.println("Yes(y) or not(n)");
+        if (sc.next().equals("y")) {
+            menu();
+        }
     }
 
     // <--------------------------> Consult <-------------------------->
@@ -50,8 +100,7 @@ public class connector {
         System.out.println("Do you want to check something else?");
         System.out.println("Yes(y) or not(n)");
         if (sc.next().equals("y")) {
-
-            consult();
+            menu();
         }
     }
 
@@ -252,7 +301,6 @@ public class connector {
         return false;
     }
 
-
     // <--------------------------> Insert <-------------------------->
 
     static void insert() {
@@ -278,10 +326,10 @@ public class connector {
                     partInsert();
                     break;
                 case 2:
-                    System.out.println("hello");
+                    teamInsert();
                     break;
                 case 3:
-                    System.out.println("hello");
+                    sportInsert();
                     break;
                 case 4:
                     return;
@@ -294,7 +342,7 @@ public class connector {
         System.out.println("Do you want to check something else?");
         System.out.println("Yes(y) or not(n)");
         if (sc.next().equals("y")) {
-            insert();
+            menu();
         }
 
 
@@ -368,37 +416,51 @@ public class connector {
 
             Statement st = conexion.createStatement();
 
-            System.out.println("Enter the Team information: ");
+            System.out.println("Enter team information: ");
             System.out.println("");
 
-            System.out.println("DNI(required): ");
-            String dni = sc.next();
             System.out.println("Name(required): ");
             String name = sc.next();
-            System.out.println("First last name(required): ");
-            String last_name1 = sc.next();
-            System.out.println("Second last name: ");
-            String last_name2 = sc.next();
-            System.out.println("Nationality(required): ");
-            String nationality = sc.next();
-            System.out.println("Age(required): ");
-            String age = sc.next();
-            System.out.println("Birth date(required): ");
-            String birth_date = sc.next();
-            System.out.println("Gender(required: Male or Female): ");
-            String gender = sc.next();
-            System.out.println("Height: ");
-            String height = sc.next();
-            System.out.println("Weight: ");
-            String weight = sc.next();
-            System.out.println("Active(required: Yer or No): ");
-            String active = sc.next();
-            System.out.println("Type(required: Coach,Player or Referee: ):  ");
-            String type = sc.next();
-            System.out.println("Back numner: ");
-            String back_number = sc.next();
+            System.out.println("country(required): ");
+            String country = sc.next();
 
-            st.executeUpdate("INSERT INTO participant (back_number,name,last_name1,last_name2,age,gender,dni,nationality,height,weight,type,is_active, birth_date) VALUES ("+back_number+",'"+name+"','"+last_name1+"','"+last_name2+"',"+age+",'"+gender+"','"+dni+"','"+nationality+"',"+height+","+weight+",'"+type+"','"+active+"','"+birth_date+"')");
+            st.executeUpdate("INSERT INTO team(name,country) VALUES("+"'"+name+"','"+country+"')");
+
+            conexion.commit();
+            conexion.close();
+
+        } catch (Exception e) {
+            System.out.println("The data entered is not correct, do you want to try another one?");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                partCon();
+            }
+        }
+
+
+    }
+
+    static void sportInsert() {
+
+        Scanner sc = new Scanner(System.in);
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            conexion.setAutoCommit(false);
+
+            Statement st = conexion.createStatement();
+
+            System.out.println("Enter sport information: ");
+            System.out.println("");
+
+            System.out.println("Name(required): ");
+            String name = sc.next();
+            System.out.println("Category(required): ");
+            String category = sc.next();
+
+            st.executeUpdate("INSERT INTO sport(name, category_name) VALUES("+"'"+name+"','"+category+"')");
 
             conexion.commit();
             conexion.close();
