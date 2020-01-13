@@ -7,7 +7,7 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-       teamId("99999999A");
+       menu();
     }
 
     // <--------------------------> Menu <----------------------------->
@@ -146,7 +146,10 @@ public class connector {
                     System.out.println("Type: " + type);
                     System.out.println("Back numner: " + back_number);
 
+
                 }
+                System.out.print("ID team: ");
+                teamId(dni);
                 System.out.println("-----------------------");
                 st.close();
                 rs.close();
@@ -168,6 +171,8 @@ public class connector {
 
     }
 
+
+
     static void teamConId(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Id team: ");
@@ -175,25 +180,6 @@ public class connector {
         System.out.println("-----------------------");
         teamCon(id);
     }
-
-    static void teamId(String dni) {
-        try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
-            Statement st = conexion.createStatement();
-            String query = "SELECT id_team FROM `participant_have_team` WHERE `dni`='" + dni + "'";
-
-
-            ResultSet rs = st.executeQuery(query);
-
-            String id = rs.getString("id_team");
-            System.out.println(id);
-
-        } catch (Exception e) {
-            System.err.println("Error");
-        }
-    }
-
 
     static void teamCon(String id) {
         Scanner sc = new Scanner(System.in);
@@ -694,6 +680,28 @@ public class connector {
         }
         return false;
     }
+
+    static void teamId(String dni) {
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+
+            String query = "SELECT id_team FROM `participant_have_team` WHERE `dni`='" + dni + "'";
+
+            Statement st = conexion.createStatement();
+
+            ResultSet rs = st.executeQuery(query);
+
+
+            while (rs.next()) {
+                System.out.println(rs.getString("id_team"));
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error");
+        }
+    }
+
 
 
 }
