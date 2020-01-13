@@ -1,7 +1,5 @@
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -112,7 +110,7 @@ public class connector {
         if (compDni(dni)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
-                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
                 String query = "SELECT * FROM `participant` WHERE `dni`='" + dni + "'";
 
@@ -177,7 +175,7 @@ public class connector {
         if (compTeams(id)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
-                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
                 String query = "SELECT * FROM `team` WHERE `id_team`='" + id + "'";
 
@@ -220,7 +218,7 @@ public class connector {
         Scanner sc = new Scanner(System.in);
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
             String query = "SELECT * FROM `sport`";
 
@@ -299,7 +297,7 @@ public class connector {
 
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
-                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+                Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
                 conexion.setAutoCommit(false);
 
                 Statement st = conexion.createStatement();
@@ -358,7 +356,7 @@ public class connector {
         Scanner sc = new Scanner(System.in);
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
             conexion.setAutoCommit(false);
 
             Statement st = conexion.createStatement();
@@ -395,7 +393,7 @@ public class connector {
         Scanner sc = new Scanner(System.in);
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
             conexion.setAutoCommit(false);
 
             Statement st = conexion.createStatement();
@@ -487,16 +485,16 @@ public class connector {
         if (compColumn(dato)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
-                Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
-                conexion.setAutoCommit(false);
-                Statement st = conexion.createStatement();
-
+                Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
                 System.out.println("");
                 System.out.println("New data: ");
                 String nuevoDato = sc.next();
-                System.out.println("update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'");
 
-                st.executeUpdate("update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'");
+                String sql = "update participant set "+dato+"='"+nuevoDato+"' where dni='"+dni+"'";
+                Statement st = conexion.createStatement();
+
+                st.executeUpdate(sql);
+                conexion.setAutoCommit(true);
                 st.close();
 
             } catch (Exception e) {
@@ -539,7 +537,7 @@ public class connector {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
             Statement st = conexion.createStatement();
 
             String query = "SELECT dni FROM `participant`";
@@ -569,7 +567,7 @@ public class connector {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
             Statement st = conexion.createStatement();
 
             String query = "SELECT id_team FROM `team`";
@@ -597,7 +595,7 @@ public class connector {
 
         try {
             String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "root", "tuenti1997");
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
             Statement st = conexion.createStatement();
 
             ResultSet rs = st.executeQuery("SELECT * FROM `participant`");
