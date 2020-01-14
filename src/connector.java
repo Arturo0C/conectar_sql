@@ -102,7 +102,6 @@ public class connector {
         System.out.println("National Document Number: ");
         System.out.println("-----------------------");
         String dni = sc.next();
-        System.out.println("-----------------------");
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
@@ -110,12 +109,12 @@ public class connector {
                 String query = "SELECT * FROM `participant` where dni like '" + dni + "'";
 
                 Statement st = conexion.createStatement();
-
-                //Execute the query and get a java resulset
                 ResultSet rs = st.executeQuery(query);
 
-                // Mostramos lo que queremos de la query hecha.
                 while (rs.next()) {
+
+                    System.out.printf("%60s| ",rs.getString("name")+rs.getString("last_name1")+" "+rs.getString("last_name2"));
+
 
                     String name = rs.getString("name");
                     String last_name1 = rs.getString("last_name1");
