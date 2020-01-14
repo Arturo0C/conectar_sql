@@ -73,7 +73,7 @@ public class connector {
         if (!(select > 4)) {
             switch (select) {
                 case 1:
-                    partConDni();
+                    partCon();
                     break;
                 case 2:
                     teamConId();
@@ -97,17 +97,12 @@ public class connector {
         }
     }
 
-    static void partConDni() {
+    static void partCon() {
         Scanner sc = new Scanner(System.in);
         System.out.println("National Document Number: ");
         System.out.println("-----------------------");
         String dni = sc.next();
         System.out.println("-----------------------");
-        partCon(dni);
-    }
-
-    static void partCon(String dni) {
-        Scanner sc = new Scanner(System.in);
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
@@ -480,7 +475,6 @@ public class connector {
         String dni = sc.next();
         System.out.println("-----------------------");
         System.out.println("");
-        partCon(dni);
 
         System.out.println("What data do you want to change?");
         String dato = sc.next();
@@ -586,36 +580,6 @@ public class connector {
     private static boolean isNumeric(@NotNull String str) {
         connector.str = str;
         return (str.matches("[+-]?\\d*(\\.\\d+)?") && !str.equals(""));
-    }
-
-    static boolean compDni(String dni) {
-
-        try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
-            Statement st = conexion.createStatement();
-
-            String query = "SELECT dni FROM `participant`";
-            ResultSet rs = st.executeQuery(query);
-
-            // Mostramos lo que queremos de la query hecha.
-            while (rs.next()) {
-                String dni_tabla = rs.getString("dni");
-
-                if (!dni.equals(dni_tabla)) {
-                    continue;
-                } else {
-                    return true;
-                }
-            }
-
-            st.close();
-            rs.close();
-        } catch (Exception e) {
-            System.err.println("Error on verification of dni");
-        }
-
-        return false;
     }
 
     static boolean compTeams(String id) {
