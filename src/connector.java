@@ -100,6 +100,7 @@ public class connector {
     static void partConDni() {
         Scanner sc = new Scanner(System.in);
         System.out.println("National Document Number: ");
+        System.out.println("-----------------------");
         String dni = sc.next();
         System.out.println("-----------------------");
         partCon(dni);
@@ -107,12 +108,11 @@ public class connector {
 
     static void partCon(String dni) {
         Scanner sc = new Scanner(System.in);
-        if (compDni(dni)) {
             try {
                 String url = "jdbc:mysql://localhost:3306/sports";
                 Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
-                String query = "SELECT * FROM `participant` WHERE `dni`='" + dni + "'";
+                String query = "SELECT * FROM `participant` where dni like '" + dni + "'";
 
                 Statement st = conexion.createStatement();
 
@@ -145,29 +145,20 @@ public class connector {
                     System.out.println("Active: " + active);
                     System.out.println("Type: " + type);
                     System.out.println("Back numner: " + back_number);
-
+                    System.out.print("Team: ");
+                    teamId(dni);
+                    System.out.println("-----------------------");
+                    System.out.println("");
 
                 }
-                System.out.print("Team: ");
-                teamId(dni);
-                System.out.println("-----------------------");
+
                 st.close();
                 rs.close();
 
             } catch (Exception e) {
                 System.err.println("Error");
             }
-        } else {
-            System.out.println("The National Identification Document introduced does not exist, do you want to try another one?");
-            System.out.println("Yes(y) or not(n)");
-            String i = sc.next();
-            System.out.println("");
-            if (i.equals("y")) {
-                System.out.println("");
-                partConDni();
 
-            }
-        }
 
     }
 
