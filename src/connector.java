@@ -7,7 +7,7 @@ public class connector {
     private static String str;
 
     public static void main(String[] args) throws SQLException {
-        menu();
+        partCon2();
     }
 
     // <--------------------------> Menu <----------------------------->
@@ -97,63 +97,88 @@ public class connector {
         }
     }
 
+
+    static void partCon2(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("National Document Number: ");
+        System.out.println("-----------------------");
+        String dni = sc.next();
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+
+            String query = "select *,p.name as nombrepersona, t.name as team,pt.dni as dni2 from participant p inner join participant_have_team pt on p.dni=pt.dni inner join team t on pt.id_team = t.id_team where p.dni like '"+dni+"'";
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+
+
+            System.out.printf("| %-27s | %-11s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-20s | ", "Name", "Nationality", "Age", "Birth date", "Gender", "Height", "Weight", "Type", "Is active", "back number", "Team");
+            System.out.println("");
+            while (rs.next()) {
+                System.out.printf("| %-27s | %-11s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-11s | %-20s | ", rs.getString("nombrepersona")+" "+rs.getString("last_name1")+" "+rs.getString("last_name2"), rs.getString("nationality"), rs.getString("age"), rs.getString("birth_date"), rs.getString("gender"), rs.getString("height"), rs.getString("weight"), rs.getString("type"), rs.getString("is_active"), rs.getString("back_number"), rs.getString("team"));
+                System.out.println("");
+            }
+
+            st.close();
+            rs.close();
+        }
+        catch (Exception e) {
+            System.err.println("Error");
+        }
+    }
+
     static void partCon() {
         Scanner sc = new Scanner(System.in);
         System.out.println("National Document Number: ");
         System.out.println("-----------------------");
         String dni = sc.next();
-            try {
-                String url = "jdbc:mysql://localhost:3306/sports";
-                Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
 
-                String query = "SELECT * FROM `participant` where dni like '" + dni + "'";
-
-                Statement st = conexion.createStatement();
-                ResultSet rs = st.executeQuery(query);
-
-                while (rs.next()) {
-
-                    System.out.printf("%60s| ",rs.getString("name")+rs.getString("last_name1")+" "+rs.getString("last_name2"));
+            String query = "select *, (select name from team where id_team=(select id_team from participant_have_team where dni='"+dni+"')) as team from participant where dni='"+dni+"'";
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
 
 
-                    String name = rs.getString("name");
-                    String last_name1 = rs.getString("last_name1");
-                    String last_name2 = rs.getString("last_name2");
-                    String nation = rs.getString("nationality");
-                    int age = rs.getInt("age");
-                    String birth_date = rs.getString("birth_date");
-                    String gender = rs.getString("gender");
-                    int height = rs.getInt("height");
-                    double weight = rs.getDouble("weight");
-                    String type = rs.getString("type");
-                    String active = rs.getString("is_active");
-                    int back_number = rs.getInt("back_number");
+            while (rs.next()) {
 
-                    System.out.println("Name: " + name + " " + last_name1 + " " + last_name2 + ".");
-                    System.out.println("Nationality: " + nation);
-                    System.out.println("Age: " + age);
-                    System.out.println("Birth date: " + birth_date);
-                    System.out.println("Gender: " + gender);
-                    System.out.println("Height: " + height);
-                    System.out.println("Weight: " + weight);
-                    System.out.println("Active: " + active);
-                    System.out.println("Type: " + type);
-                    System.out.println("Back numner: " + back_number);
-                    System.out.print("Team: ");
-                    teamId(dni);
-                    System.out.println("-----------------------");
-                    System.out.println("");
+                String name = rs.getString("name");
+                String last_name1 = rs.getString("last_name1");
+                String last_name2 = rs.getString("last_name2");
+                String nation = rs.getString("nationality");
+                int age = rs.getInt("age");
+                String birth_date = rs.getString("birth_date");
+                String gender = rs.getString("gender");
+                int height = rs.getInt("height");
+                double weight = rs.getDouble("weight");
+                String type = rs.getString("type");
+                String active = rs.getString("is_active");
+                int back_number = rs.getInt("back_number");
 
-                }
+                System.out.println("Name: " + name + " " + last_name1 + " " + last_name2 + ".");
+                System.out.println("Nationality: " + nation);
+                System.out.println("Age: " + age);
+                System.out.println("Birth date: " + birth_date);
+                System.out.println("Gender: " + gender);
+                System.out.println("Height: " + height);
+                System.out.println("Weight: " + weight);
+                System.out.println("Active: " + active);
+                System.out.println("Type: " + type);
+                System.out.println("Back numner: " + back_number);
+                System.out.println("Team: "+rs.getString("team"));
+                System.out.println("-----------------------");
+                System.out.println("");
 
-                st.close();
-                rs.close();
-
-            } catch (Exception e) {
-                System.err.println("Error");
             }
 
+            st.close();
+            rs.close();
 
+        } catch (Exception e) {
+            System.err.println("Error");
+        }
     }
 
     static void teamConId(){
@@ -474,7 +499,6 @@ public class connector {
         String dni = sc.next();
         System.out.println("-----------------------");
         System.out.println("");
-
         System.out.println("What data do you want to change?");
         String dato = sc.next();
         dato = dato.toLowerCase();
