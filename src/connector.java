@@ -25,7 +25,7 @@ public class connector {
         System.out.println("");
         System.out.printf("| %-19s |", "3. Modify");
         System.out.println("");
-        System.out.printf("| %-19s |", "3. Delete");
+        System.out.printf("| %-19s |", "4. Delete");
         System.out.println("");
         System.out.println("-----------------------");
         System.out.println("");
@@ -35,11 +35,10 @@ public class connector {
         System.out.println("");
         if (!(isNumeric(input))) {
             System.out.println("This is not a choice, only numbers");
-            input = "5";
             menu();
         }
         int select = Integer.parseInt(input);
-        if (!(select > 5)) {
+        if (select < 4) {
             switch (select) {
                 case 1:
                     consult();
@@ -51,9 +50,7 @@ public class connector {
                     modify();
                     break;
                 case 4:
-                    System.out.println("hello!");
-                case 5:
-                    return;
+                    delete();
             }
         } else {
             System.out.println("It only works with numbers from 1 to 4");
@@ -140,6 +137,10 @@ public class connector {
                     System.out.println("");
                 }
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                rs.close();
+                st.close();
+                conexion().close();
             } catch (Exception e) {
                 System.err.println("Error");
             }
@@ -169,9 +170,10 @@ public class connector {
                 System.out.println("");
             }
             System.out.println("------------------------------------------------------------");
+
             st.close();
             rs.close();
-
+            conexion().close();
         } catch (Exception e) {
             System.err.println("Fail to connect.");
             System.out.println("Yes(y) or not(n)");
@@ -201,9 +203,10 @@ public class connector {
                 System.out.println("");
             }
             System.out.println("------------------------------------------------------------");
+
             st.close();
             rs.close();
-
+            conexion().close();
         } catch (Exception e) {
             System.err.println("Fail to charge the Sport list.");
         }
@@ -351,6 +354,8 @@ public class connector {
 
             System.out.println("Enter team information: ");
             System.out.println("");
+
+
 
             System.out.println("Name(required): ");
             String name = sc.next();
@@ -511,10 +516,9 @@ public class connector {
                 String nuevoDato = sc.next();
                 System.out.println("");
 
-                String sql = "update participant set " + dato + "='" + nuevoDato + "' where dni='" + dni + "'";
                 Statement st = conexion().createStatement();
+                st.executeUpdate("update participant set " + dato + "='" + nuevoDato + "' where dni='" + dni + "'");
 
-                st.executeUpdate(sql);
                 conexion().setAutoCommit(true);
                 conexion().close();
                 st.close();
@@ -603,10 +607,9 @@ public class connector {
             String nuevoDato = sc.next();
             System.out.println("");
 
-            String sql = "update team set " + dato + "='" + nuevoDato + "' where id_team=" + id + "";
             Statement st = conexion().createStatement();
+            st.executeUpdate("update team set " + dato + "='" + nuevoDato + "' where id_team=" + id + "");
 
-            st.executeUpdate(sql);
             conexion().setAutoCommit(true);
             st.close();
 
@@ -654,10 +657,12 @@ public class connector {
             String nuevoDato = sc.next();
             System.out.println("");
 
-            String sql = "update sport set " + dato + "='" + nuevoDato + "' where id_sport=" + id + "";
-            Statement st = conexion().createStatement();
 
-            st.executeUpdate(sql);
+            Statement st = conexion().createStatement();
+            st.executeUpdate("update sport set " + dato + "='" + nuevoDato + "' where id_sport=" + id + "");
+
+
+
             conexion().setAutoCommit(true);
             st.close();
 
@@ -676,6 +681,124 @@ public class connector {
 
 
     // <--------------------------> Delete <-------------------------->
+    static void delete() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("-----------------------");
+        System.out.printf("| %-19s |", "Select an option");
+        System.out.println("");
+        System.out.println("-----------------------");
+        System.out.printf("| %-19s |", "1. Participant");
+        System.out.println("");
+        System.out.printf("| %-19s |", "2. Team");
+        System.out.println("");
+        System.out.printf("| %-19s |", "3. Sport");
+        System.out.println("");
+        System.out.printf("| %-19s |", "4. Menu");
+        System.out.println("");
+        System.out.println("-----------------------");
+        System.out.println("");
+
+        String input = sc.next();
+        System.out.println("");
+        if (!(isNumeric(input))) {
+            System.out.println("This is not a choice, only numbers");
+            input = "5";
+            delete();
+        }
+        int select = Integer.parseInt(input);
+        if (!(select > 5)) {
+            switch (select) {
+                case 1:
+                    System.out.println("hello!");
+                    break;
+                case 2:
+                    System.out.println("hello!");
+                    break;
+                case 3:
+                    System.out.println("hello!");
+                    break;
+                case 4:
+                    menu();
+                case 5:
+                    return;
+            }
+        } else {
+            System.out.println("It only works with numbers from 1 to 3");
+            delete();
+        }
+
+        System.out.println("Do you want to check something else?");
+        System.out.println("Yes(y) or not(n)");
+        if (sc.next().equals("y")) {
+            System.out.println("");
+            menu();
+        }
+    }
+
+    static void partDelete() {
+        try {
+            String url = "jdbc:mysql://localhost:3306/sports";
+            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
+            String query = "select *,p.name as nombrepersona, t.name as team,pt.dni as dni2 from participant p inner join participant_have_team pt on p.dni=pt.dni inner join team t on pt.id_team = t.id_team where p.dni like '%'";
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("| %-11s | %-27s | %-11s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-20s | ", "dni", "name", "nationality", "age", "birth_date", "gender", "height", "weight", "type", "is_active", "back_number", "team");
+            System.out.println("");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            while (rs.next()) {
+                System.out.printf("| %-11s | %-27s | %-11s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-10s | %-11s | %-20s | ", rs.getString("dni"), rs.getString("nombrepersona") + " " + rs.getString("last_name1") + " " + rs.getString("last_name2"), rs.getString("nationality"), rs.getString("age"), rs.getString("birth_date"), rs.getString("gender"), rs.getString("height"), rs.getString("weight"), rs.getString("type"), rs.getString("is_active"), rs.getString("back_number"), rs.getString("team"));
+                System.out.println("");
+            }
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What do you want to delete?");
+        String date = sc.next();
+        System.out.println("");
+
+        date = date.toLowerCase();
+
+        if (compColumn(date)) {
+            try {
+                String sql = "delete participant where dni = '"+date+"'";
+                Statement st = conexion().createStatement();
+                st.executeUpdate(sql);
+
+
+                conexion().setAutoCommit(true);
+                conexion().close();
+                st.close();
+
+            } catch (Exception e) {
+                System.out.println("");
+                System.out.println("The data entered is not correct, do you want to try another one?");
+                System.out.println("Yes(y) or not(n)");
+                String i = sc.next();
+                System.out.println("");
+                if (i.equals("y")) {
+                    System.out.println("");
+                    partDelete();
+                }
+            }
+        } else {
+            System.out.println("The column does not exist");
+            System.out.println("Do you want to try again?2");
+            System.out.println("Yes(y) or not(n)");
+            String i = sc.next();
+            System.out.println("");
+            if (i.equals("y")) {
+                System.out.println("");
+                partModify();
+            }
+        }
+
+    }
 
 
     // <--------------------------> General <------------------------->
