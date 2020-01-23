@@ -75,6 +75,8 @@ public class connector {
         System.out.println("");
         System.out.printf("| %-19s |", "3. Sport listing");
         System.out.println("");
+        System.out.printf("| %-19s |", "4. Menu");
+        System.out.println("");
         System.out.println("-----------------------");
         System.out.println("");
 
@@ -99,6 +101,8 @@ public class connector {
                     listCon();
                     break;
                 case 4:
+                    menu();
+                case 5:
                     return;
             }
         } else {
@@ -220,6 +224,8 @@ public class connector {
         System.out.println("");
         System.out.printf("| %-19s |", "3. Sport");
         System.out.println("");
+        System.out.printf("| %-19s |", "4. Menu");
+        System.out.println("");
         System.out.println("-----------------------");
         System.out.println("");
 
@@ -227,11 +233,11 @@ public class connector {
         System.out.println("");
         if (!(isNumeric(input))) {
             System.out.println("This is not a choice, only numbers");
-            input = "4";
+            input = "5";
             insert();
         }
         int select = Integer.parseInt(input);
-        if (!(select > 4)) {
+        if (!(select > 5)) {
             switch (select) {
                 case 1:
                     partInsert();
@@ -243,6 +249,8 @@ public class connector {
                     sportInsert();
                     break;
                 case 4:
+                    menu();
+                case 5:
                     return;
             }
         } else {
@@ -408,6 +416,7 @@ public class connector {
 
     }
 
+
     // <--------------------------> Modify <-------------------------->
 
     static void modify() {
@@ -423,6 +432,8 @@ public class connector {
         System.out.println("");
         System.out.printf("| %-19s |", "3. Sport");
         System.out.println("");
+        System.out.printf("| %-19s |", "4. Menu");
+        System.out.println("");
         System.out.println("-----------------------");
         System.out.println("");
 
@@ -430,11 +441,11 @@ public class connector {
         System.out.println("");
         if (!(isNumeric(input))) {
             System.out.println("This is not a choice, only numbers");
-            input = "4";
+            input = "5";
             consult();
         }
         int select = Integer.parseInt(input);
-        if (!(select > 4)) {
+        if (!(select > 5)) {
             switch (select) {
                 case 1:
                     partModify();
@@ -443,9 +454,11 @@ public class connector {
                     teamModify();
                     break;
                 case 3:
-                    System.out.println("hello!");
+                    sportModify();
                     break;
                 case 4:
+                    menu();
+                case 5:
                     return;
             }
         } else {
@@ -591,6 +604,57 @@ public class connector {
             System.out.println("");
 
             String sql = "update team set " + dato + "='" + nuevoDato + "' where id_team=" + id + "";
+            Statement st = conexion().createStatement();
+
+            st.executeUpdate(sql);
+            conexion().setAutoCommit(true);
+            st.close();
+
+        } catch (Exception e2) {
+            System.out.println("");
+            System.out.println("The data entered is not correct, do you want to try another one?");
+            System.out.println("Yes(y) or not(n)");
+            String j = sc.next();
+            System.out.println("");
+            if (j.equals("y")) {
+                System.out.println("");
+                teamModify();
+            }
+        }
+    }
+
+    static void sportModify() {
+        Scanner sc = new Scanner(System.in);
+        try {
+            Statement st = conexion().createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM `sport` WHERE `id_sport` like '%'");
+
+            System.out.println("-------------------------------------------------------");
+            System.out.printf("| %-5s | %-20s | %-20s |", "Id", "name", "category_name");
+            System.out.println("");
+            System.out.println("-------------------------------------------------------");
+            while (rs.next()) {
+                System.out.printf("| %-5s | %-20s | %-20s |", rs.getString("id_sport"), rs.getString("name"), rs.getString("category_name"));
+                System.out.println("");
+            }
+            System.out.println("-------------------------------------------------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Id of the sport: ");
+        String id = sc.next();
+        System.out.println("");
+
+        System.out.println("What data do you want to change?");
+        String dato = sc.next();
+        dato = dato.toLowerCase();
+        try {
+            System.out.println("");
+            System.out.println("New " + dato + ": ");
+            String nuevoDato = sc.next();
+            System.out.println("");
+
+            String sql = "update sport set " + dato + "='" + nuevoDato + "' where id_sport=" + id + "";
             Statement st = conexion().createStatement();
 
             st.executeUpdate(sql);
