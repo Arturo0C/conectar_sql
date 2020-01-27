@@ -25,7 +25,7 @@ public class connector {
         System.out.println("");
         System.out.printf("| %-19s |", "3. Modify");
         System.out.println("");
-        System.out.printf("| %-19s |", "3. Delete");
+        System.out.printf("| %-19s |", "4. Delete");
         System.out.println("");
         System.out.println("-----------------------");
         System.out.println("");
