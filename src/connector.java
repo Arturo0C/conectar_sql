@@ -109,6 +109,8 @@ public class connector {
         if (sc.next().equals("y")) {
             System.out.println("");
             menu();
+        } else {
+            System.exit(1);
         }
     }
 
