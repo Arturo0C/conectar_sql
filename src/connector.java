@@ -1,19 +1,12 @@
 import org.jetbrains.annotations.NotNull;
 
-import javax.sound.midi.Soundbank;
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.*;
-import java.util.Calendar;
-import java.util.Map;
 import java.util.Scanner;
 
 public class connector {
     private static String str;
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         menu();
     }
 
@@ -45,7 +38,7 @@ public class connector {
             menu();
         }
         int select = Integer.parseInt(input);
-        if (select < 4) {
+        if (select < 5) {
             switch (select) {
                 case 1:
                     consult();
@@ -92,7 +85,7 @@ public class connector {
             consult();
         }
         int select = Integer.parseInt(input);
-        if (!(select > 4)) {
+        if (select < 5) {
             switch (select) {
                 case 1:
                     partCon();
@@ -105,8 +98,6 @@ public class connector {
                     break;
                 case 4:
                     menu();
-                case 5:
-                    return;
             }
         } else {
             System.out.println("It only works with numbers from 1 to 4");
@@ -189,7 +180,6 @@ public class connector {
     }
 
     static void listCon() {
-        Scanner sc = new Scanner(System.in);
         try {
             Statement st = conexion().createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM `sport`");
@@ -239,7 +229,7 @@ public class connector {
             insert();
         }
         int select = Integer.parseInt(input);
-        if (select < 4) {
+        if (select < 5) {
             switch (select) {
                 case 1:
                     partInsert();
@@ -509,7 +499,7 @@ public class connector {
             modify();
         }
         int select = Integer.parseInt(input);
-        if (select < 4) {
+        if (select < 5) {
             switch (select) {
                 case 1:
                     partModify();
@@ -763,7 +753,7 @@ public class connector {
             delete();
         }
         int select = Integer.parseInt(input);
-        if (select < 4) {
+        if (select < 5) {
             switch (select) {
                 case 1:
                     partDel();
@@ -776,8 +766,6 @@ public class connector {
                     break;
                 case 4:
                     menu();
-                case 5:
-                    return;
             }
         } else {
             System.out.println("It only works with numbers from 1 to 3");
@@ -990,8 +978,7 @@ public class connector {
 
     static Connection conexion() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/sports";
-        Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
-        return conexion;
+        return DriverManager.getConnection(url, "admin", "Nochelarga123-");
     }
 
 
