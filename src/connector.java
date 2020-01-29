@@ -937,9 +937,7 @@ public class connector {
     static boolean compColumn(String date) {
 
         try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
-            Statement st = conexion.createStatement();
+            Statement st = conexion().createStatement();
 
             ResultSet rs = st.executeQuery("SELECT * FROM `participant`");
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -960,10 +958,7 @@ public class connector {
 
     static boolean compDNI(String dni) {
         try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
-
-            Statement st = conexion.createStatement();
+            Statement st = conexion().createStatement();
             ResultSet rs = st.executeQuery("select dni from participant");
 
             while (rs.next()) {
