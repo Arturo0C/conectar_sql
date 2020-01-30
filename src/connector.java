@@ -10,8 +10,6 @@ public class connector {
         menu();
 
 
-
-
     }
 
     // <--------------------------> Menu <----------------------------->
@@ -551,10 +549,8 @@ public class connector {
 
     static void partModify() {
         try {
-            String url = "jdbc:mysql://localhost:3306/sports";
-            Connection conexion = DriverManager.getConnection(url, "admin", "Nochelarga123-");
             String query = "select *,p.name as nombrepersona, t.name as team,pt.dni as dni2 from participant p inner join participant_have_team pt on p.dni=pt.dni inner join team t on pt.id_team = t.id_team where p.dni like '%'";
-            Statement st = conexion.createStatement();
+            Statement st = conexion().createStatement();
             ResultSet rs = st.executeQuery(query);
 
 
